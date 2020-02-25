@@ -1,0 +1,22 @@
+
+
+#配置日志
+#logging:
+#  file : E:\\gitProjects\\slefjoinxsalarymanagement\\salary.log
+mybatis:
+  mapper-locations: classpath:com/joinx/salary/repository/*.xml
+  type-aliases-package: com.joinx.salary.pojo
+  configuration: ##配置日志输出的方式 120.27.13.123
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: joinx-yang
+    url: jdbc:mysql://120.27.13.123:3306/salarymanagement?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+  mvc:
+    view:
+      prefix: /WEB-INF/pages/
+      suffix: .jsp
+server:
+  port: 8081

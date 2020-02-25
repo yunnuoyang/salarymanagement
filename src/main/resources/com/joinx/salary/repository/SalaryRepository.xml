@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.SalaryRepository">
+    <select id="getByAreaTime" resultMap="baseMap">
+        select * from salary where salary_eno=#{userNo}
+        <if test="area.start !=null ">
+            and permit_time &gt;=#{area.start}
+        </if>
+        <if test="area.end !=null ">
+            and permit_time &lt;=#{area.end}
+        </if>
+
+
+    </select>
+    <select id="getList" resultMap="baseMap">
+        select * from salary where salary_no=#{sno}
+    </select>
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Salary">
+        <id property="id" column="id"></id>
+        <result property="sno" column="salary_no"></result>
+        <result property="eno" column="salary_eno"></result>
+        <result property="basic" column="salary_basic"></result>
+        <result property="performance" column="salary_performance"></result>
+        <result property="wage" column="wage"></result>
+        <result property="permitTime" column="permit_time"></result>
+    </resultMap>
+
+    <insert id="save">
+          INSERT INTO salary
+          (
+            salary_no,
+            salary_eno,
+            salary_basic,
+            salary_performance,
+            wage
+            ,permit_time
+	       )
+	       VALUES
+            (#{sno}
+            ,#{eno}
+            ,#{basic}
+            ,#{performance}
+            ,#{wage}
+            ,#{permitTime}
+	        );
+    </insert>
+
+    <!--<update id="update">-->
+        <!--update salary set wage=#{wage} where salary_eno=#{eno} and area_start &lt;=#{areaStart}-->
+          <!--and area_end &gt;=#{areaEnd}-->
+    <!--</update>-->
+    <update id="update">
+        update salary
+        set salary_performance=#{performance},wage=#{wage}
+        where salary_no=#{sno}
+        and salary_eno=#{eno}
+    </update>
+</mapper>

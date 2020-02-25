@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.StandardRepository">
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Standard">
+        <id column="id" property="id"></id>
+        <result property="onlineDays" column="online_days"></result>
+        <result property="onlineHours" column="online_hours"></result>
+        <result property="workStartHour" column="work_start_hour"></result>
+    </resultMap>
+    <select id="getStandard" resultMap="baseMap">
+        select * from standard
+    </select>
+    <update id="update" parameterType="com.joinx.salary.pojo.Standard">
+        update standard
+        <set>
+            <if test="onlineDays !=null ">
+                online_days=#{onlineDays}
+            </if>
+            <if test="onlineHours !=null ">
+                online_hours=#{onlineHours}
+            </if>
+            <if test="workStartHour !=null ">
+                work_start_hour=#{workStartHour}
+            </if>
+            where id=#{id}
+        </set>
+    </update>
+</mapper>

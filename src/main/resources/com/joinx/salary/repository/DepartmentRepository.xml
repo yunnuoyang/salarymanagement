@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.DepartmentRepository">
+
+
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Department">
+        <id property="id" column="id"></id>
+        <result property="dno" column="dno"></result>
+        <result property="dName" column="d_name"></result>
+    </resultMap>
+    <select id="getDepartmentByDno" resultMap="baseMap">
+        select * from department where dno=#{dno}
+    </select>
+
+    <select id="getDepartments" resultMap="baseMap" parameterType="com.joinx.salary.util.PageHelper">
+
+        select * from department
+    </select>
+
+    <select id="getByNames" resultMap="baseMap">
+        select id,dno,d_name  from department where d_name=#{departName}
+    </select>
+        <sql id="where_sql">
+            <where>
+                1=1
+                <if test="param.dno != null ">
+                    and dno=#{param.dno}
+                </if>
+                <if test="param.dName != null ">
+                    and d_name=#{param.dName}
+                </if>
+            </where>
+        </sql>
+
+
+
+</mapper>

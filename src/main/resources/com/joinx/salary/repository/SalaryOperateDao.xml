@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.SalaryOperateDao">
+
+    <resultMap type="com.joinx.salary.pojo.SalaryOperate" id="SalaryOperateMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="salaryno" column="salaryNo" />
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SalaryOperateMap">
+        select
+          id, salaryNo, status
+        from salarymanagement.salary_operate
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SalaryOperateMap">
+        select
+          id, salaryNo, status
+        from salarymanagement.salary_operate
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SalaryOperateMap">
+        select
+          id, salaryNo, status
+        from salarymanagement.salary_operate
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="salaryno != null">
+                and salaryNo = #{salaryno}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into salarymanagement.salary_operate(salaryNo, status)
+        values (#{salaryno}, #{status})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update salarymanagement.salary_operate
+        <set>
+            <if test="salaryno != null">
+                salaryNo = #{salaryno},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from salarymanagement.salary_operate where id = #{id}
+    </delete>
+
+</mapper>

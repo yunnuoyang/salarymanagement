@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.UserRepository">
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.User">
+        <id property="id" column="id"></id>
+        <result property="userNo" column="user_no"></result>
+        <result property="departmentNo" column="department_no"></result>
+        <result property="loginName" column="loginname"></result>
+        <result property="password" column="password"></result>
+        <result property="sex" column="sex"></result>
+        <result property="realName" column="realname"></result>
+        <result property="address" column="address"></result>
+        <result property="tel" column="tel"></result>
+        <result property="email" column="email"></result>
+        <result property="status" column="status"></result>
+        <result property="workAge" column="work_age"></result>
+    </resultMap>
+    <select id="getUsers" resultMap="baseMap" parameterType="com.joinx.salary.util.PageHelper">
+        select * from user
+        <include refid="where_sql"></include>
+
+    </select>
+    <select id="userInfoByUno" resultMap="baseMap">
+        select * from user where user_no=#{eno}
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from user
+    </select>
+    <select id="getUserByLoginName" resultMap="baseMap">
+        select * from user where loginname=#{loginName}
+    </select>
+    <sql id="where_sql">
+        <where>
+            <if test="param !=null ">
+                1=1
+            </if>
+            <if test="param.realName != null ">
+                and realname=#{param.realName}
+            </if>
+            <if test="param.departmentNo != null ">
+                and department_no=#{param.departmentNo}
+            </if>
+            <if test="param.sex != null ">
+                and sex=#{param.sex}
+            </if>
+            <if test="param.userNo != null ">
+                and  user_no=#{param.userNo}
+            </if>
+            <if test="param.status != null ">
+                and status=#{param.status}
+            </if>
+            <if test="param.workAge != null ">
+                and work_age &lt;= #{param.workAge}
+            </if>
+        </where>
+    </sql>
+    <select id="loginUser" parameterType="com.joinx.salary.pojo.User" resultMap="baseMap">
+        select * from user where loginname= #{loginName} and password=#{password}
+    </select>
+    <insert id="save" parameterType="user">
+        insert into user(user_no,
+	     department_no,
+	     loginname,
+	     PASSWORD,
+	     realname,
+	     address,
+	     tel,
+	     sex,
+	     Email,
+	     STATUS,
+	     work_age) values(#{userNo}
+	     ,#{departmentNo}
+	     ,#{loginName}
+	     ,#{password}
+	     ,#{realName}
+	     ,#{address}
+	     ,#{tel}
+	     ,#{sex}
+	     ,#{email}
+	     ,#{status}
+	     ,#{workAge}
+	     )
+    </insert>
+
+    <update id="update"  parameterType="com.joinx.salary.pojo.User">
+        update  user
+        <include refid="update_sql"></include>
+        where user_no=#{userNo}
+    </update>
+    <sql id="update_sql">
+        <set>
+        <if test="realName!= null ">
+             realname=#{realName},
+        </if>
+        <if test="password!= null ">
+            password=#{password},
+        </if>
+         <if test="sex!= null ">
+             sex=#{sex},
+        </if>
+        <if test="email!= null " >
+            email=#{email},
+        </if>
+        <if test="tel!= null ">
+             tel=#{tel},
+        </if>
+        <if test="status!= null ">
+            status=#{status},
+        </if>
+        <if test="loginName!= null ">
+            loginName=#{loginName},
+        </if>
+        <if test="workAge!= null ">
+            work_age=#{workAge},
+        </if>
+        <if test="departmentNo!= null ">
+            department_no=#{departmentNo},
+        </if>
+        <if test="address!= null ">
+            address=#{address},
+        </if>
+        </set>
+    </sql>
+
+
+    <delete id="delete">
+        delete from user where user_no=#{userNo}
+    </delete>
+</mapper>

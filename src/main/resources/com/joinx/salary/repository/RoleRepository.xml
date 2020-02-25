@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.RoleRepository">
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Role">
+        <id column="id" property="id"></id>
+        <result property="rno" column="role_no"></result>
+        <result property="name" column="role_name"></result>
+
+    </resultMap>
+    <select id="getRoleByUserNo" parameterType="String" resultMap="baseMap">
+        SELECT role.* FROM user , user_role,role
+        WHERE user.user_no=user_role.user_no
+        AND user_role.role_no=role.role_no AND user.user_no=#{user_no}
+    </select>
+
+    <select id="getRoles" resultMap="baseMap">
+        select * from role
+    </select>
+
+    <insert id="saveToURTable">
+       insert into user_role(user_no,role_no)
+       values (#{userNo},#{roleNo})
+    </insert>
+
+    <delete id="delete">
+        delete from user_role where user_no=#{userNo}
+    </delete>
+</mapper>

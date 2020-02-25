@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.LeaveRepository">
+
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Leave">
+        <id property="id" column="id"></id>
+        <result property="lno" column="leave_no"></result>
+        <result property="reason" column="leave_reason"></result>
+        <result property="eno" column="leave_eno"></result>
+        <result property="startTime" column="leave_start_time"></result>
+        <result property="leaveApply" column="leave_apply"></result>
+        <result property="endTime" column="leave_end_time"></result>
+        <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
+        <result property="operateResult" column="operate_result" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="isExitThatDay" resultMap="baseMap">
+        select * from leave_table
+        where leave_eno=#{userNo}
+        and leave_apply &gt;= date(#{areaStart})
+        and leave_apply &lt;= date(#{areaEnd})
+    </select>
+    <select id="leaves" parameterType="com.joinx.salary.util.PageHelper" resultMap="baseMap">
+        select * from leave_table
+        <include refid="where_sql"></include>
+    </select>
+    <sql id="where_sql">
+        <where>
+            <if test="param!=null">
+                1=1
+            </if>
+            <if test="param.lno != null ">
+                and leave_no=#{param.lno}
+            </if>
+            <if test="param.eno != null ">
+                and leave_eno=#{param.eno}
+            </if>
+            <if test="param.startTime != null ">
+                and  leave_start_time >= date(#{param.startTime})
+            </if>
+            <if test="param.endTime != null ">
+                and leave_end_time &lt;= date(#{param.endTime})
+            </if>
+            <if test="param.operateResult != null ">
+                and operate_result = date(#{param.operateResult})
+            </if>
+        </where>
+    </sql>
+
+
+    <update id="update">
+        update leave_table
+        <include refid="update_sql"/>
+        where leave_eno=#{eno}
+    </update>
+    <sql id="update_sql">
+      <set>
+          <if test="leaveApply !=null">
+            leave_apply=#{leaveApply}
+          </if>
+          <if test="operateTime !=null">
+            operate_time=#{operateTime}
+          </if>
+          <if test="operateResult !=null">
+              operate_result=#{operateResult}
+          </if>
+      </set>
+    </sql>
+
+    <select id="list" resultMap="baseMap">
+        select * from leave_table where leave_eno=#{userNo}
+    </select>
+    <update id="updateByLno" parameterType="com.joinx.salary.pojo.Leave">
+        update leave_table set operate_result=#{operateResult}
+        ,operate_time =#{operateTime}
+        where leave_no=#{lno}
+    </update>
+    <insert id="save" parameterType="com.joinx.salary.pojo.Leave">
+        insert into leave_table(
+        leave_no
+        , leave_reason
+        , leave_eno
+        , leave_start_time
+        , leave_end_time
+        , leave_apply
+        , operate_time
+        , operate_result
+        ) values(
+        #{lno}
+        ,#{reason}
+        ,#{eno}
+        ,#{startTime}
+        ,#{endTime}
+        ,#{leaveApply}
+        ,#{operateTime}
+        ,#{operateResult}
+        )
+    </insert>
+</mapper>

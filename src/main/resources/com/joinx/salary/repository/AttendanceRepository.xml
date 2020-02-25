@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joinx.salary.repository.AttendanceRepository">
+
+    <resultMap id="baseMap" type="com.joinx.salary.pojo.Attendance">
+        <id property="id" column="id"></id>
+        <result property="no" column="attendance_no"></result>
+        <result property="eno" column="attendance_eno"></result>
+        <result property="attendanceEnd" column="attendance_end"></result>
+        <result property="attendanceStart" column="attendance_start"></result>
+    </resultMap>
+
+
+    <select id="oncheck" parameterType="com.joinx.salary.util.PageHelper" resultMap="baseMap">
+        select * from attendance
+        <include refid="where_sql"></include>
+    </select>
+    <sql id="where_sql">
+        <where>
+            1=1
+            <if test="param.eno != null ">
+               and attendance_eno=#{param.eno}
+            </if>
+            <if test="param.attendanceEnd != null ">
+                and attendance_end &lt;=date(#{param.attendanceEnd})
+            </if>
+            <if test="param.attendanceStart != null ">
+                and attendance_start >=date(#{param.attendanceStart})
+            </if>
+            <if test="param.no != null ">
+                and attendance_no&lt;=#{param.no}
+            </if>
+        </where>
+    </sql>
+</mapper>
