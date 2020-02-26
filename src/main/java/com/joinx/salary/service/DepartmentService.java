@@ -16,4 +16,6 @@ public interface DepartmentService {
     Map getCharts(AreaTimeVO areaTime);
 
     List aspect(AreaTimeVO areaTimeVO,String departName);
+
+    Map<String,Object> record(AreaTimeVO areaTimeVO);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @Date
  * @Description
  */
-@Controller
+@RestController
 public class DepartmentController {
    
    @Autowired
@@ -50,6 +51,7 @@ public class DepartmentController {
    @RequestMapping("/depart/charts")
    @ResponseBody
    public Map salaryCharts(AreaTimeVO areaTimeVO){
+      System.out.println("areaTimeVO charts= " + areaTimeVO);
       Map map =departmentService.getCharts(areaTimeVO);
       return map;
    }
@@ -58,12 +60,16 @@ public class DepartmentController {
    @ResponseBody
    public List allAspect(AreaTimeVO areaTimeVO,
             String departName){
-        System.out.println("areaTimeVO = " + areaTimeVO);
-        System.out.println("departName = " + departName);
        List list=departmentService.aspect(areaTimeVO,departName);
 
       return list;
    }
+
+   @RequestMapping("/depart/salaryRecord")
+    public Map<String,Object> record(AreaTimeVO areaTimeVO){
+       return departmentService.record(areaTimeVO);
+   }
+
 
 
 }

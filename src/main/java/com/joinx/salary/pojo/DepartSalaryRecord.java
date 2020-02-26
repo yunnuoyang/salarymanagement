@@ -1,8 +1,6 @@
 package com.joinx.salary.pojo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,7 +12,10 @@ import java.util.Date;
 @Data
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DepartSalaryRecord implements Serializable {
+
     private Integer id;
 
     private String departId;

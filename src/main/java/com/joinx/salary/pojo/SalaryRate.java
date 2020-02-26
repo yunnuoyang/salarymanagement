@@ -1,12 +1,17 @@
 package com.joinx.salary.pojo;
 
 import java.io.Serializable;
+
+import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * salary_rate
  * @author 
  */
+@Data
+@ToString
 public class SalaryRate implements Serializable {
     private Integer id;
 

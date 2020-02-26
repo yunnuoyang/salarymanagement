@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author
@@ -51,6 +51,8 @@ public class DepartmentServiceImpl implements DepartmentService {
       e.createCriteria()
               .andSalarySendTimeBetween(areaTime.getStart(),areaTime.getEnd());
       List<DepartSalaryRecord> records = departSalaryRecordMapper.selectByExample(e);
+      records=check(records,areaTime);
+
 
       for(DepartSalaryRecord record:records){
          series.add(record.getSalaryCount());
@@ -63,6 +65,45 @@ public class DepartmentServiceImpl implements DepartmentService {
       maps.put("map",map);
       maps.put("time",areaTime);
       return maps;
+   }
+
+   private List<DepartSalaryRecord> check( List<DepartSalaryRecord> records, AreaTimeVO areaTime) {
+      System.out.println("areaTime = " + areaTime);
+      System.out.println(records.size()+"=000000");
+      List<String> ids = records.stream().map(DepartSalaryRecord::getDepartId).distinct().collect(Collectors.toList());
+      System.out.println(ids.size()+"==ids");
+      if (ids.size()<records.size()){
+         records.removeAll(records);
+         for(String id:ids){
+            System.out.println("ids = " + id);
+            DepartSalaryRecordExample e = new DepartSalaryRecordExample();
+            e.createCriteria()
+                    .andSalarySendTimeBetween(areaTime.getStart(),areaTime.getEnd())
+                    .andDepartIdEqualTo(id);
+            List<DepartSalaryRecord> thisIdRecords = departSalaryRecordMapper.selectByExample(e);
+            System.out.println("thisIdRecords = " + thisIdRecords);
+            if(thisIdRecords.size()==1){
+               records.add(thisIdRecords.get(0));
+               continue;
+            }
+            System.out.println(thisIdRecords.size());
+            DepartSalaryRecord record = thisIdRecords.get(0);
+            Double endowmentInsurance = thisIdRecords.stream().map(DepartSalaryRecord::getEndowmentInsurance).reduce(Double::sum).get();;
+            Double unemployment = thisIdRecords.stream().map(DepartSalaryRecord::getUnemployment).reduce(Double::sum).get();
+            Double medicare = thisIdRecords.stream().map(DepartSalaryRecord::getMedicare).reduce(Double::sum).get();
+            Double rearInsurance = thisIdRecords.stream().map(DepartSalaryRecord::getRearInsurance).reduce(Double::sum).get();
+            Double injuryInsurance = thisIdRecords.stream().map(DepartSalaryRecord::getInjuryInsurance).reduce(Double::sum).get();
+            Double reservedFund = thisIdRecords.stream().map(DepartSalaryRecord::getReservedFund).reduce(Double::sum).get();
+            Double salaryBasicCount = thisIdRecords.stream().map(DepartSalaryRecord::getSalaryBasicCount).reduce(Double::sum).get();
+            Double salaryCount = thisIdRecords.stream().map(DepartSalaryRecord::getSalaryCount).reduce(Double::sum).get();
+            DepartSalaryRecord record1 = new DepartSalaryRecord(record.getId(), record.getDepartId(), thisIdRecords.get(0).getSalarySendTime(),
+                    salaryCount,  salaryBasicCount, endowmentInsurance, medicare,
+                     unemployment, injuryInsurance, rearInsurance,  reservedFund);
+            records.add(record1);
+         }
+
+      }
+      return records;
    }
 
    @Override
@@ -78,7 +119,8 @@ public class DepartmentServiceImpl implements DepartmentService {
               .andSalarySendTimeBetween(areaTime.getStart(),areaTime.getEnd())
       .andDepartIdEqualTo(department.getDno());
       List<DepartSalaryRecord> recordList = departSalaryRecordMapper.selectByExample(e);
-      DepartSalaryRecord cord=recordList.size()>0?recordList.get(0):new DepartSalaryRecord();
+      List<DepartSalaryRecord> check = check(recordList, areaTime);
+      DepartSalaryRecord cord=check.get(0);
       Pie p1 = new Pie();
       p1.setName("生育保险金");
       p1.setValue(cord.getRearInsurance().toString());
@@ -119,6 +161,34 @@ public class DepartmentServiceImpl implements DepartmentService {
       p8.setValue(cord.getUnemployment().toString());
 
       return pieData;
+   }
+
+   @Override
+   public Map<String,Object> record(AreaTimeVO areaTimeVO) {
+      List<DepartSalaryRecord> data = departSalaryRecordMapper.selectByExample(new DepartSalaryRecordExample());
+      List response=new ArrayList(20);
+      for (DepartSalaryRecord record:data){
+         Department department = departmentRepository.getDepartmentByDno(record.getDepartId());
+         DecorateMap put = new DecorateMap()
+                 .put("id",record.getId())
+                 .put("dname", department.getDName())
+                 .put("dno", department.getDno())
+                 .put("medicare", record.getMedicare())
+                 .put("injury", record.getInjuryInsurance())
+                 .put("endowment", record.getEndowmentInsurance())
+                 .put("rear", record.getRearInsurance())
+                 .put("unemployment", record.getUnemployment())
+                 .put("reservedFund", record.getReservedFund())
+                 .put("basicCount", record.getSalaryBasicCount())
+                 .put("count", record.getSalaryCount())
+                 .put("sendTime", TimeUtil.getYMDHMS(record.getSalarySendTime()));
+         response.add(put);
+      }
+      return new DecorateMap()
+              .put("data",response)
+               .put("msg","")
+               .put("code",0)
+               .put("total",response.size());
    }
 
    //开始计算上月份部门工资

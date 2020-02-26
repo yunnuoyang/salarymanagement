@@ -82,6 +82,10 @@
       </if>
     </trim>
   </insert>
+
+  <select id="list" resultMap="BaseResultMap">
+    select * from salary_rate;
+  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.joinx.salary.pojo.SalaryRate">
     update salary_rate
     <set>

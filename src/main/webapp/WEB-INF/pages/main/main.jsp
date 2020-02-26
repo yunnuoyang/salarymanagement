@@ -53,7 +53,7 @@
                     <%--</dl>--%>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;" onclick="toShow('/path/charts/salarycharts')">工资统计</a>
+                    <a class="" href="javascript:;" onclick="toShow('/path/salary/DepartSalaryRecord')">工资记录</a>
                     <%--<dl class="layui-nav-child">--%>
                         <%--<dd><a href="javascript:;" >主题列表</a></dd>--%>
                     <%--</dl>--%>
@@ -65,7 +65,7 @@
                     <%--</dl>--%>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" onclick="toShow('/path/salary/salaryOperate')">工资管理</a>
+                    <a href="javascript:;" onclick="toShow('/path/salary/insuranceSetting')">五险一金设置</a>
                     <%--<dl class="layui-nav-child">--%>
                         <%--<dd><a href="javascript:;" >票数统计</a></dd>--%>
                     <%--</dl>--%>
@@ -77,7 +77,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe id="toShow" src="" style="height:600px;width:100%;border:0;">
+        <iframe id="toShow" src="/path/charts/salarycharts" style="height:600px;width:100%;border:0;">
         </iframe>
 
     </div>

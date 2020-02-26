@@ -76,7 +76,7 @@
     id, depart_ID, salary_send_time, salary_count, salary_basic_count, endowment_insurance, 
     medicare, unemployment, injury_insurance, rear_insurance, reserved_fund
   </sql>
-  <select id="selectByExample" parameterType="com.joinx.salary.pojo.DepartSalaryRecordExample" resultMap="BaseResultMap">
+  <select flushCache="true" id="selectByExample" parameterType="com.joinx.salary.pojo.DepartSalaryRecordExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
