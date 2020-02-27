@@ -28,4 +28,8 @@ public class Salary {
    private BigDecimal performance;//绩效奖金
    private BigDecimal wage;//奖惩金
    private Date permitTime;//工资下发时间
+
+   private Double insuranceCount;//五险一金的总和
+
+   private Double finalSalary;//最终下发的工资
 }

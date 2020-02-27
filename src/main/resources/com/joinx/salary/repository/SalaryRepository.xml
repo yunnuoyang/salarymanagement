@@ -23,6 +23,8 @@
         <result property="performance" column="salary_performance"></result>
         <result property="wage" column="wage"></result>
         <result property="permitTime" column="permit_time"></result>
+        <result property="insuranceCount" column="insurance_Count"></result>
+        <result property="finalSalary" column="final_Salary"></result>
     </resultMap>
 
     <insert id="save">
@@ -34,6 +36,8 @@
             salary_performance,
             wage
             ,permit_time
+            ,insurance_Count
+            ,final_Salary
 	       )
 	       VALUES
             (#{sno}
@@ -42,6 +46,8 @@
             ,#{performance}
             ,#{wage}
             ,#{permitTime}
+            ,#{insuranceCount}
+            ,#{finalSalary}
 	        );
     </insert>
 

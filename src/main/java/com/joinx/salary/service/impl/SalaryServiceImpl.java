@@ -27,6 +27,9 @@ public class SalaryServiceImpl implements SalaryService {
    private StandardRepository standardRepository;
 
    @Autowired
+   private SalaryRateMapper rateMapper;
+
+   @Autowired
    private SalaryStandardRespository salaryStandardRespository;
 
    @Autowired
@@ -57,6 +60,15 @@ public class SalaryServiceImpl implements SalaryService {
       salary1.setWage(new BigDecimal(decresMoney));
       //全勤奖
       salary1.setPerformance(new BigDecimal(decresMoney==0?200:0));
+      //获取员工的五险一金的税收标准
+      SalaryRate emp = rateMapper.selectByPrimaryKey(2);
+      //扣除的总税
+      Double rate=emp.getCountRate()*salaryStandards.get(0).getSalaryBasic();
+      salary1.setInsuranceCount(rate);
+      //基本工资+绩效奖金-迟到请假-五险一金
+      Double finalSalary=salaryStandards.get(0).getSalaryBasic()+salary1.getPerformance().doubleValue()-decresMoney
+              -rate;
+      salary1.setFinalSalary(finalSalary);
       salaryRepository.save(salary1);
 
    }

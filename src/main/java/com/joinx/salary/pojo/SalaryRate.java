@@ -13,6 +13,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @ToString
 public class SalaryRate implements Serializable {
+    private Double countRate;
+
+    public Double getCountRate() {
+        countRate=this.getEndowmentInsuranceRate()+this.getInjuryInsuranceRate()+this.getRearInsuranceRate()
+                +this.getMdeicareRate()+this.getReservedFundRate()+this.getUnemploymentRate();
+        return countRate;
+    }
+
     private Integer id;
 
     private Double endowmentInsuranceRate;

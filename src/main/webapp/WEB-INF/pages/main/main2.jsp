@@ -59,12 +59,6 @@
                     <%--</dl>--%>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" onclick="toShow('/path/layer/salary')">工资组成</a>
-                    <%--<dl class="layui-nav-child">--%>
-                    <%--<dd><a href="javascript:;" >票数统计</a></dd>--%>
-                    <%--</dl>--%>
-                </li>
-                <li class="layui-nav-item">
                     <a href="javascript:;" onclick="toShow('/path/layer/applyLeave')">申请假期</a>
 
                 </li>
@@ -79,7 +73,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe id="toShow" src="" style="height:600px;width:100%;border:0;">
+        <iframe id="toShow" src="/path/layer/salary" style="height:600px;width:100%;border:0;">
         </iframe>
 
     </div>

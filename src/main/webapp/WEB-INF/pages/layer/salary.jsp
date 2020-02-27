@@ -12,6 +12,28 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/layui-v2.5.6/css/layui.css" media="all">
 </head>
 <body>
+<form class="layui-form" action="" style="margin-top: 200px">
+
+
+    <div class="layui-inline">
+        <label class="layui-form-label">起始时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="startTime" id="startTime" lay-verify="datetime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">终止时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="endTime" id="endTime" lay-verify="datetime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <%--<button type="button" id="btn" class="layui-btn layui-btn-primary">导出统计图</button>--%>
+        </div>
+    </div>
+</form>
 <div>
 <div id="pie" style="width: 600px;height:400px;float: left"></div>
 <form class="layui-form" action="" style="float: right">
