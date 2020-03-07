@@ -29,4 +29,6 @@ public interface UserService {
     User userInfoByUno(String eno);
 
     User getUserByLoginName(String loginName);
+
+    void removeByUserNos(List<String> unEmp);
 }

@@ -1,9 +1,6 @@
 package com.joinx.salary.controller;
 
-import com.joinx.salary.pojo.AreaTimeVO;
-import com.joinx.salary.pojo.Salary;
-import com.joinx.salary.pojo.SalaryOperate;
-import com.joinx.salary.pojo.User;
+import com.joinx.salary.pojo.*;
 import com.joinx.salary.service.SalaryOperateService;
 import com.joinx.salary.service.SalaryService;
 import com.joinx.salary.service.UserService;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -36,28 +34,34 @@ public class SalaryController {
    @ResponseBody
    public List calculateSalary(String userNo ,  AreaTimeVO areaTime){
       List<Salary> money=salaryService.getLastSalaryRecord(userNo,areaTime);
-      double basic=0;
-      double performance=0;
-      double wage=0;
-      for (Salary s: money
-           ) {
-            basic+=s.getBasic().doubleValue();
-            performance+=s.getPerformance().doubleValue();
-            wage+=s.getWage().doubleValue();
-      }
-      DecorateMap map = new DecorateMap();
-      List data=new ArrayList();
-      map.put("value",basic)
-         .put("name","基础薪资");
-      data.add(map);
-      DecorateMap map2 = new DecorateMap();
-      map2.put("value",performance)
-          .put("name","绩效奖金");
-      data.add(map2);
-      DecorateMap map3 = new DecorateMap();
-      map3.put("value",wage)
-          .put("name","缺勤扣除金额");
-      data.add(map3);
+       double basic = money.stream().map(Salary::getBasic).reduce(BigDecimal::add).get().doubleValue();
+       double performance = money.stream().map(Salary::getPerformance).reduce(BigDecimal::add).get().doubleValue();
+       double wage = money.stream().map(Salary::getWage).reduce(BigDecimal::add).get().doubleValue();
+       Double insuranceCount = money.stream().map(Salary::getInsuranceCount).reduce(Double::sum).get();
+       Double finalSalary = money.stream().map(Salary::getFinalSalary).reduce(Double::sum).get();
+       List data=new ArrayList();
+       Pie p1 = new Pie();
+       p1.setName("基础薪资");
+       p1.setValue(basic);
+       data.add(p1);
+
+       Pie p2=new Pie();
+       p2.setName("绩效奖金");
+       p2.setValue(performance);
+       data.add(p2);
+       Pie p3=new Pie();
+       p3.setName("缺勤扣除金额");
+       p3.setValue(wage);
+       data.add(p3);
+
+       Pie p4=new Pie();
+       p4.setName("五险扣除金额");
+       p4.setValue(insuranceCount);
+       data.add(p4);
+       Pie p5=new Pie();
+       p5.setName("实发工资");
+       p5.setValue(finalSalary);
+       data.add(p5);
       return data;
    }
    @RequestMapping("/salary/list")
@@ -81,6 +85,8 @@ public class SalaryController {
                  .put("salaryNo",s.getSno())
                  .put("userNo",s.getEno())
                  .put("loginName", user.getLoginName())
+                 .put("insuranceSalary",s.getInsuranceCount())
+                 .put("finnalSalary",s.getFinalSalary())
                  .put("realName", user.getRealName());
          data.add(map);
       }

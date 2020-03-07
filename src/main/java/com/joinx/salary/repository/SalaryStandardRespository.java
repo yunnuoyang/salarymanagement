@@ -65,4 +65,5 @@ public interface SalaryStandardRespository {
      */
     int deleteById(Integer id);
 
+    void removeByUserNos(@Param("userNos") List<String> userNos);
 }

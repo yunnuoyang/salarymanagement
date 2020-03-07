@@ -32,7 +32,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    管理员
+                   普通员工
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:void(0)" id="baseInfo">基本资料</a></dd>

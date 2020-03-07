@@ -38,17 +38,17 @@
             ,totalRow: true
             ,cols: [[
                 {field:'dname', title:'部门名称', width:120, fixed: 'left', sort: true}
-                ,{field:'dno', title:'部门编号',hide:true, width:120, edit: 'text'}
-                ,{field:'id', title:'部门薪水记录id',hide:true, width:120, edit: 'text'}
-                ,{field:'medicare', title:'医疗保险总额', width:120, edit: 'text'}
-                ,{field:'injury', title:'工伤保险总额', width:120, edit: 'text'}
-                ,{field:'endowment', title:'养老保险总额', width:120, edit: 'text'}
-                ,{field:'unemployment', title:'失业保险总额', width:120, edit: 'text'}
-                ,{field:'reservedFund', title:'公积金总额', width:120, edit: 'text'}
-                ,{field:'basicCount', title:'基础薪资', width:120, edit: 'text'}
-                ,{field:'count', title:'总金额', width:120, edit: 'text'}
-                ,{field:'sendTime', title:'下发时间', width:120, edit: 'text'}
-                ,{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}
+                ,{field:'dno', title:'部门编号',hide:true, width:120}
+                ,{field:'id', title:'部门薪水记录id',hide:true, width:120}
+                ,{field:'medicare', title:'医疗保险总额', width:120}
+                ,{field:'injury', title:'工伤保险总额', width:120}
+                ,{field:'endowment', title:'养老保险总额', width:120}
+                ,{field:'unemployment', title:'失业保险总额', width:120}
+                ,{field:'reservedFund', title:'公积金总额', width:120}
+                ,{field:'basicCount', title:'基础薪资', width:120}
+                ,{field:'count', title:'总金额', width:120}
+                ,{field:'sendTime', title:'下发时间', width:120}
+                ,{fixed: 'right', width:250, align:'center'}
             ]]
             ,page: true
 

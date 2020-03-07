@@ -8,8 +8,10 @@ import java.util.List;
 
 @Transactional
 public interface SalaryService {
-   void calculateSalary(String userNo, Salary salary, AreaTimeVO areaTime);
-   List<Salary> getLastSalaryRecord(String userNo, AreaTimeVO areaTime);
+
+    void calculateSalary(String userNo, Salary salary, AreaTimeVO areaTime);
+
+    List<Salary> getLastSalaryRecord(String userNo, AreaTimeVO areaTime);
 
     List<Salary> getList(String salaryno);
 

@@ -22,7 +22,7 @@
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <script type="text/html" id="barDemo2">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reSure">重新核算</a>
+    <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reSure">重新核算</a>--%>
 </script>
 
 <script src="${pageContext.request.contextPath }/layui-v2.5.6/layui.js"></script>
@@ -62,11 +62,13 @@
                 ,{field:'userNo', title:'员工编号',sort:true}
                 ,{field:'loginName', title:'登录名称'}
                 ,{field:'basic', title:'基础薪资'}
-                // ,{field:'status', title:'在职状态',event: 'status',sort: true}
-                ,{field:'performance', title:'绩效', width:110, unresize: true,sort: true}
                 ,{field:'wage', title:'罚金', width:85,unresize: true,sort: true}
+                ,{field:'performance', title:'绩效', width:110, unresize: true,sort: true}
+                // ,{field:'status', title:'在职状态',event: 'status',sort: true}
+                ,{field:'insuranceSalary', title:'五险一金', width:85,unresize: true,sort: true}
+                ,{field:'finnalSalary', title:'实发工资', width:85,unresize: true,sort: true}
                 ,{field:'permitTime', title:'下发时间'}
-                ,{field:'salaryNo', title:'工资编号'}
+                ,{field:'salaryNo',hide:true, title:'工资编号'}
                 ,{fixed: 'right', width:150, align:'center', toolbar: '#barDemo2'}
             ]]
             ,page: true

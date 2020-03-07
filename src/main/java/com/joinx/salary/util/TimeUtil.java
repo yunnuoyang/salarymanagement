@@ -103,9 +103,9 @@ public class TimeUtil {
       return days;
    }
    public static boolean contains(){
-      String ymd = getYMD(new Date());
-      Date parse = TimeUtil.getParse(ymd);
-      int day = parse.getDay();
+      calendar = Calendar.getInstance();
+      calendar.setTime(new Date());
+      int day = calendar.get(Calendar.DAY_OF_MONTH);
       if (day==5)
       {
          return true;
@@ -206,6 +206,8 @@ public class TimeUtil {
       System.out.println(i+"???????");
       boolean compare = TimeUtil.compare(date2, date1);
       System.out.println(compare+"-----");
+      boolean contains = TimeUtil.contains();
+      System.out.println("contains = " + contains);
 
    }
 }

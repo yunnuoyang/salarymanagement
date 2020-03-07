@@ -2,6 +2,7 @@ package com.joinx.salary.repository;
 
 import com.joinx.salary.pojo.User;
 import com.joinx.salary.util.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public interface UserRepository {
     User userInfoByUno(String eno);
 
     User getUserByLoginName(String loginName);
+
+    void removeByUserNos(@Param("unEmp") List<String> unEmp);
 }

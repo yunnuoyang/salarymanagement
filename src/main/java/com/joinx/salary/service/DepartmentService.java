@@ -18,4 +18,5 @@ public interface DepartmentService {
     List aspect(AreaTimeVO areaTimeVO,String departName);
 
     Map<String,Object> record(AreaTimeVO areaTimeVO);
+     void startCaculate(AreaTimeVO areaTime);
 }

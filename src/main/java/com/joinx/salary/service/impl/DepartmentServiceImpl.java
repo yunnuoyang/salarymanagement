@@ -192,7 +192,7 @@ public class DepartmentServiceImpl implements DepartmentService {
    }
 
    //开始计算上月份部门工资
-   private void startCaculate(){
+   public void startCaculate(AreaTimeVO areaTime){
       PageHelper<Department> dhelper = new PageHelper<>();
       dhelper.setParam(new Department());
       //获取所有的部门
@@ -206,9 +206,9 @@ public class DepartmentServiceImpl implements DepartmentService {
          //根据部门的编号获取到员工的编号
          List<User> users = userRepository.getUsers(uhelper);
          Double departSalary=0d;
-         AreaTimeVO areaTime=new AreaTimeVO();
-         areaTime.setStart(TimeUtil.getLastMonthBegin());
-         areaTime.setEnd(TimeUtil.getLastMonthEnd());
+         ;
+         areaTime.setStart(areaTime.getStart()==null?TimeUtil.getLastMonthBegin():areaTime.getStart());
+         areaTime.setEnd(areaTime.getEnd()==null?TimeUtil.getLastMonthEnd():areaTime.getEnd());
          for(User u:users){
             //根据员工的编号获取到所发的薪水数目
             Salary byAreaTime = salaryRepository.getByAreaTime(u.getUserNo(),areaTime)

@@ -29,6 +29,11 @@
     <select id="getUserByLoginName" resultMap="baseMap">
         select * from user where loginname=#{loginName}
     </select>
+    <delete id="removeByUserNos" parameterType="list">
+        delete from user where user_no in (#{unEmp})
+    </delete>
+
+
     <sql id="where_sql">
         <where>
             <if test="param !=null ">

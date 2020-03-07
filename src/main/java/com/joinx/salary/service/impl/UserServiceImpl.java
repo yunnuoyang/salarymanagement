@@ -120,4 +120,16 @@ public class UserServiceImpl implements UserService {
    public User getUserByLoginName(String loginName) {
       return userRepository.getUserByLoginName(loginName);
    }
+
+   @Override
+   public void removeByUserNos(List<String> unEmp) {
+      //将这些id的员工存储到备份表中
+
+      //将这些user_no的员工
+      userRepository.removeByUserNos(unEmp);
+      //删除用户的身份信息
+      roleRepository.removeUserRoleByUserNos(unEmp);
+      //删除员工工资信息
+      salaryStandardRespository.removeByUserNos(unEmp);
+   }
 }

@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Pie {
-    private String value;
-    private String name;
+    private Object value;
+    private Object name;
 }

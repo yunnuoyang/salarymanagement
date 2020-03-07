@@ -17,4 +17,6 @@ public interface RoleRepository {
    List<Role> getRoles();
 
     void delete(String userNo);
+
+    void removeUserRoleByUserNos(@Param("unEmp") List<String> unEmp);
 }

@@ -63,5 +63,7 @@
     <delete id="deleteById">
         delete from salarymanagement.salary_standard where id = #{id}
     </delete>
-
+    <delete id="removeByUserNos" parameterType="arraylist">
+        delete from salary_standard where user_no in (#{userNos})
+    </delete>
 </mapper>
