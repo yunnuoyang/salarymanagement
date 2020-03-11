@@ -49,7 +49,7 @@ public class LoginController {
    }
    @RequestMapping(value="/dologin")
    @ResponseBody
-   public ResponseDto loginProcess(User user, HttpSession session ) throws JsonProcessingException {
+   public ResponseDto loginProcess( User user, HttpSession session ) throws JsonProcessingException {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       System.out.println("登陆处理中");
       System.out.println(user);
@@ -78,6 +78,13 @@ public class LoginController {
       session.removeAttribute("loginUser");
       session.invalidate();
       return "login/login";
+   }
+   @RequestMapping("/getSession")
+   @ResponseBody
+   public User loginUser(HttpSession session){
+       User loginUser = (User) session.getAttribute("loginUser");
+
+      return loginUser;
    }
 
 

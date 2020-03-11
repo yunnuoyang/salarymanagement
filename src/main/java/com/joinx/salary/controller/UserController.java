@@ -139,6 +139,17 @@ public class UserController {
       baseinfo.add(info);
       return baseinfo;
    }
+
+   //当前用户的基本信息
+   @RequestMapping("/baseinfoApp")
+   @ResponseBody
+   public List<Object> baseInfoApp(User user){
+      List<Department> info = departmentService.departmentsInfo(null);
+      List<Object> baseinfo=new ArrayList<>();
+      baseinfo.add(user);
+      baseinfo.add(info);
+      return baseinfo;
+   }
    
    
    @RequestMapping("/userInfo")

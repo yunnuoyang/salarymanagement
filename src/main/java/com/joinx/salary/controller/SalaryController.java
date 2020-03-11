@@ -67,7 +67,10 @@ public class SalaryController {
    @RequestMapping("/salary/list")
    @ResponseBody
    public Map list(String userNo, AreaTimeVO areaTime, HttpSession session){
+       System.out.println("userNo = " + userNo);
       User loginUser = (User) session.getAttribute("loginUser");
+       System.out.println("loginUser = " + loginUser);
+
       if (loginUser.getRole().getRno().equalsIgnoreCase("000002")){
          areaTime.setStart(areaTime.getStart()==null?TimeUtil.getLastMonthBegin():areaTime.getStart());
          areaTime.setEnd(areaTime.getEnd()==null?TimeUtil.getLastMonthEnd():areaTime.getEnd());
