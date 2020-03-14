@@ -26,6 +26,9 @@
         delete from user_role where user_no=#{userNo}
     </delete>
     <delete id="removeUserRoleByUserNos" parameterType="arraylist">
-        delete from user_role where user_no in (#{unEmp})
+        delete from user_role where user_no in (
+        <foreach collection="unEmp" item="id" index="index" separator=",">
+            #{id}
+        </foreach>)
     </delete>
 </mapper>

@@ -51,7 +51,7 @@ public class LoginController {
    @ResponseBody
    public ResponseDto loginProcess( User user, HttpSession session ) throws JsonProcessingException {
       user.setPassword(passwordEncoder.encode(user.getPassword()));
-      System.out.println("登陆处理中");
+      System.out.println("登陆处理中,,,更正版，含app");
       System.out.println(user);
       User loginUser = userService.loginUser(user);
       Role role = null;

@@ -30,5 +30,7 @@ public interface UserService {
 
     User getUserByLoginName(String loginName);
 
-    void removeByUserNos(List<String> unEmp);
+    void removeByUserNos();
+
+    User getByUserNo(User user);
 }

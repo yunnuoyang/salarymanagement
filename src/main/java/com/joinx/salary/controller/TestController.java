@@ -34,14 +34,15 @@ public class TestController {
         for(User u:users){
             salaryService.calculateSalary(u.getUserNo(),new Salary(),areaTimeVO);
         }
-        //将离职的员工的信息进行备份并从员工表移除
-        List<String> unEmp = users.stream()
-                .filter(user -> user.getStatus().equalsIgnoreCase("0"))
-                .map(User::getUserNo).collect(Collectors.toList());
 
-        userService.removeByUserNos(unEmp);
 
         return "测试成功";
+    }
+
+    @RequestMapping("/removeUnEmp")
+    public String removeUnEmp(){
+        userService.removeByUserNos();
+        return "移除完成";
     }
 
     @RequestMapping("depart")

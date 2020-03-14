@@ -64,6 +64,9 @@
         delete from salarymanagement.salary_standard where id = #{id}
     </delete>
     <delete id="removeByUserNos" parameterType="arraylist">
-        delete from salary_standard where user_no in (#{userNos})
+        delete from salary_standard where user_no in (
+        <foreach collection="unEmp" item="id" index="index" separator=",">
+            #{id}
+        </foreach>)
     </delete>
 </mapper>

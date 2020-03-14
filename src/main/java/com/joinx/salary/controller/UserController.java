@@ -143,11 +143,9 @@ public class UserController {
    //当前用户的基本信息
    @RequestMapping("/baseinfoApp")
    @ResponseBody
-   public List<Object> baseInfoApp(User user){
-      List<Department> info = departmentService.departmentsInfo(null);
-      List<Object> baseinfo=new ArrayList<>();
-      baseinfo.add(user);
-      baseinfo.add(info);
+   public User baseInfoApp(User user){
+      System.out.println("user = " + user);
+     User baseinfo= userService.getByUserNo(user);
       return baseinfo;
    }
    
@@ -191,7 +189,7 @@ public class UserController {
       standard.setUserNo(user.getUserNo());
       standard.setSalaryBasic(basic);
       salaryStandardService.insert(standard);
-      return "";
+      return "添加用户成功";
    }
    @RequestMapping("/user/check")
    @ResponseBody

@@ -17,7 +17,7 @@
     </resultMap>
     <select id="getUsers" resultMap="baseMap" parameterType="com.joinx.salary.util.PageHelper">
         select * from user
-        <include refid="where_sql"></include>
+<!--        <include refid="where_sql"></include>-->
 
     </select>
     <select id="userInfoByUno" resultMap="baseMap">
@@ -30,7 +30,11 @@
         select * from user where loginname=#{loginName}
     </select>
     <delete id="removeByUserNos" parameterType="list">
-        delete from user where user_no in (#{unEmp})
+        delete from user where user_no in (
+        <foreach collection="unEmp" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
     </delete>
 
 

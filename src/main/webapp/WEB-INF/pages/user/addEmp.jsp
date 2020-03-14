@@ -122,9 +122,10 @@
                 function (data) {
                     layer.msg(data,{icon: 6,time:1000, shade:0.4})
                 }
-
             )
-
+            parent.layui.table.reload("test");
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index); //关闭当前页
             return false;
         });
     });

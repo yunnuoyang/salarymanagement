@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author
@@ -122,7 +123,13 @@ public class UserServiceImpl implements UserService {
    }
 
    @Override
-   public void removeByUserNos(List<String> unEmp) {
+   public void removeByUserNos() {
+      List<User> users = userRepository.getUsers(new User());
+      //将离职的员工的信息进行备份并从员工表移除
+      List<String> unEmp = users.stream()
+              .filter(user -> user.getStatus().equalsIgnoreCase("0"))
+              .map(User::getUserNo).collect(Collectors.toList());
+
       //将这些id的员工存储到备份表中
 
       //将这些user_no的员工
@@ -131,5 +138,10 @@ public class UserServiceImpl implements UserService {
       roleRepository.removeUserRoleByUserNos(unEmp);
       //删除员工工资信息
       salaryStandardRespository.removeByUserNos(unEmp);
+   }
+
+   @Override
+   public User getByUserNo(User user) {
+      return userRepository.userInfoByUno(user.getUserNo());
    }
 }
